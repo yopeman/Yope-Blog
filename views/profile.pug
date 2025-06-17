@@ -1,24 +1,38 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Profile
-    body
-        include index.pug 
-        h1 Profile
-        p Username: #{user.username}
-        p Email: #{user.email}
-        if profiles
-            each profile in profiles
-                img(src=profile.profilePictureUrl, alt="Profile Picture")   
-        else
-            img(src="/images/default-profile.jpg", alt="Default Profile Picture")
-        p.bio
-            | Bio:
-            | #{user.bio ? user.bio : 'No bio available.'}
-        p Registration Date: #{user.createdAt} and Last updated date: #{user.updatedAt}
-        p 
-            a(href="/account/profile/edit") Edit Profile
-        p
-            a(href="/account/logout") Logout
+extends layout.pug
+
+block content
+  .profile-header.mb-6
+    if user.profilePictureUrl
+      img.profile-picture(src=user.profilePictureUrl, alt="Profile Picture")
+    else
+      img.profile-picture(src="/images/default-profile.jpg", alt="Default Profile")
+    
+    .profile-info
+      h1= user.username
+      p.text-gray-600= user.email
+      
+      .profile-stats
+        div
+          strong.text-lg 42
+          p Posts
+        div
+          strong.text-lg 128
+          p Followers
+        div
+          strong.text-lg 86
+          p Following
+      
+      .bio.mt-3
+        p= user.bio || 'No bio available.'
+  
+  .mb-4
+    p 
+      strong Registration Date: 
+      | #{user.createdAt.toLocaleDateString()} 
+    p 
+      strong Last Updated: 
+      | #{user.updatedAt.toLocaleDateString()}
+  
+  .flex.gap-3
+    a.btn(href="/account/profile/edit") Edit Profile
+    a.btn.btn-outline(href="/account/logout") Logout

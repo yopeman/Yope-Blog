@@ -1,24 +1,24 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Document
-    body
-        include index.pug 
-        h1 Create a New Post
-        form(action="/post", method="POST", enctype="multipart/form-data")
-            div
-                label(for="title") Title:
-                input(type="text", name="title", required)
-            div
-                label(for="content") Content:
-                textarea(name="content", required)
-            div
-                label(for="image") Image:
-                input(type="file", name="image", accept="image/*")
-            div
-                label(for="tag") Tag:
-                input(type="text", name="tag", placeholder="Comma-separated tags")
-            div
-                button(type="submit") Create Post
+extends layout.pug
+
+block content
+  .form-container
+    h1.mb-3 Create a New Post
+    form(action="/post", method="POST", enctype="multipart/form-data")
+      .form-group
+        label(for="title") Title
+        input(type="text", name="title", required)
+      
+      .form-group
+        label(for="content") Content
+        textarea(name="content", required)
+      
+      .form-group
+        label(for="image") Image
+        input(type="file", name="image", accept="image/*", data-preview="imagePreview")
+        img#imagePreview.post-image(style="display: none; max-width: 300px;")
+      
+      .form-group
+        label(for="tag") Tags (comma separated)
+        input(type="text", name="tag", placeholder="e.g., tech, design, travel")
+      
+      button.btn(type="submit") Create Post

@@ -1,17 +1,672 @@
-h1 Yope Blog 
-p
-    span 
-        a(href="/") Home
-        a(href="/about") About
-        a(href="/contact") Contact
-        a(href="/login") Login
-        a(href="/signup") Sign Up
-        a(href="/logout") Logout
-        a(href="/profile") Profile
-        a(href="/post") Posts
-        a(href="/post/create") Create Post
-        a(href="/post/search?query=") Search Post
-        if post
-            a(href=`/post/${post.id}`) View Post
-            a(href=`/post/edit/${post.id}`) Edit Post
-            a(href=`/post/delete/${post.id}`) Delete Post
+//- home.pug
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Yope Blog - Home
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css")
+    style.
+      :root {
+        --primary: #4361ee;
+        --primary-dark: #3f37c9;
+        --secondary: #4cc9f0;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --gray: #6c757d;
+        --light-gray: #e9ecef;
+        --border: #dee2e6;
+        --shadow: 0 5px 15px rgba(0,0,0,0.05);
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--dark);
+        background-color: #f5f7fb;
+        overflow-x: hidden;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* Header & Navigation */
+      header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        padding: 1rem 0;
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-right: 2rem;
+      }
+
+      .logo a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: rgba(255,255,255,0.85);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        padding: 0.5rem;
+        border-radius: 4px;
+      }
+
+      .nav-links a:hover {
+        color: white;
+        background: rgba(255,255,255,0.1);
+      }
+
+      .nav-links a.active {
+        background: rgba(255,255,255,0.2);
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(rgba(67, 97, 238, 0.9), rgba(63, 55, 201, 0.9)), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 6rem 0;
+        text-align: center;
+        margin-bottom: 3rem;
+        border-radius: 0 0 20px 20px;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      }
+
+      .hero p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      /* Button Styles */
+      .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid white;
+        color: white;
+      }
+
+      .btn-outline:hover {
+        background: rgba(255,255,255,0.1);
+      }
+
+      .btn-secondary {
+        background: var(--secondary);
+      }
+
+      /* Featured Section */
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--primary);
+        position: relative;
+      }
+
+      .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: var(--secondary);
+      }
+
+      .featured-posts {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .post-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .post-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      }
+
+      .post-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .post-content {
+        padding: 1.5rem;
+      }
+
+      .post-meta {
+        display: flex;
+        align-items: center;
+        color: var(--gray);
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .post-meta i {
+        margin-right: 0.5rem;
+      }
+
+      .post-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .post-title a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .post-excerpt {
+        margin-bottom: 1.5rem;
+        color: var(--gray);
+      }
+
+      .tag {
+        display: inline-block;
+        background: rgba(67, 97, 238, 0.1);
+        color: var(--primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      /* About Section */
+      .about-section {
+        background: white;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        padding: 3rem;
+        margin-bottom: 4rem;
+        display: flex;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .about-content {
+        flex: 1;
+      }
+
+      .about-image {
+        flex: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      }
+
+      .about-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Popular Categories */
+      .categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+      }
+
+      .category-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        text-align: center;
+        transition: var(--transition);
+      }
+
+      .category-card:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-5px);
+      }
+
+      .category-card:hover h3,
+      .category-card:hover .category-icon {
+        color: white;
+      }
+
+      .category-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      /* Newsletter */
+      .newsletter {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 4rem;
+      }
+
+      .newsletter h2 {
+        margin-bottom: 1rem;
+      }
+
+      .newsletter p {
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        opacity: 0.9;
+      }
+
+      .newsletter-form {
+        display: flex;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 6px 0 0 6px;
+        font-size: 1rem;
+      }
+
+      .newsletter-form button {
+        background: var(--secondary);
+        color: var(--dark);
+        border: none;
+        padding: 0 1.5rem;
+        border-radius: 0 6px 6px 0;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .newsletter-form button:hover {
+        background: #3ab4d8;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark);
+        color: white;
+        padding: 3rem 0;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-column h3 {
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .footer-column h3:after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: var(--secondary);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-links a {
+        color: var(--light-gray);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .footer-links a:hover {
+        color: white;
+        padding-left: 5px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        color: white;
+        transition: var(--transition);
+      }
+
+      .social-links a:hover {
+        background: var(--primary);
+        transform: translateY(-3px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        color: var(--light-gray);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .nav-links {
+          gap: 0.75rem;
+          margin-top: 1rem;
+        }
+        
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        
+        .hero p {
+          font-size: 1.1rem;
+        }
+        
+        .hero-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .about-section {
+          flex-direction: column;
+        }
+        
+        .newsletter-form {
+          flex-direction: column;
+          gap: 1rem;
+        }
+        
+        .newsletter-form input,
+        .newsletter-form button {
+          width: 100%;
+          border-radius: 6px;
+        }
+      }
+  body
+    // Header
+    header
+      nav.container
+        .logo
+          a(href="/") Yope Blog
+        .nav-links
+          a(href="/", class="active") Home
+          a(href="/about") About
+          a(href="/contact") Contact
+          a(href="/post") Posts
+          a(href="/post/create") Create
+          a(href="/post/search?query=") Search
+          a(href="/account/login") Login
+          a(href="/account/signup") Sign Up
+
+    // Hero Section
+    section.hero
+      .container
+        .hero-content
+          h1 Welcome to Yope Blog
+          p Discover insightful articles, creative stories, and expert advice on technology, design, and more.
+          .hero-buttons
+            a.btn.btn-outline(href="/post") Explore Posts
+            a.btn.btn-secondary(href="/account/signup") Join Now
+
+    // Main Content
+    main.container
+      // Featured Posts
+      section
+        h2.section-title Featured Posts
+        .featured-posts
+          // Post 1
+          .post-card
+            img.post-image(src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80", alt="Web Development")
+            .post-content
+              .post-meta
+                i.far.fa-calendar
+                span May 15, 2023
+                i.far.fa-user.ml-3
+                span John Doe
+              h3.post-title
+                a(href="#") The Future of Web Development in 2023
+              p.post-excerpt Explore the latest trends and technologies shaping the future of web development this year.
+              .tags
+                span.tag Web Dev
+                span.tag JavaScript
+              a.btn(href="#", style="margin-top: 10px") Read More
+
+          // Post 2
+          .post-card
+            img.post-image(src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80", alt="UI Design")
+            .post-content
+              .post-meta
+                i.far.fa-calendar
+                span April 28, 2023
+                i.far.fa-user.ml-3
+                span Jane Smith
+              h3.post-title
+                a(href="#") Mastering UI Design Principles
+              p.post-excerpt Learn the fundamental principles that will take your UI design skills to the next level.
+              .tags
+                span.tag Design
+                span.tag UI/UX
+              a.btn(href="#", style="margin-top: 10px") Read More
+
+          // Post 3
+          .post-card
+            img.post-image(src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80", alt="AI")
+            .post-content
+              .post-meta
+                i.far.fa-calendar
+                span June 2, 2023
+                i.far.fa-user.ml-3
+                span Alex Johnson
+              h3.post-title
+                a(href="#") Artificial Intelligence in Everyday Life
+              p.post-excerpt How AI is transforming industries and becoming an integral part of our daily routines.
+              .tags
+                span.tag AI
+                span.tag Technology
+              a.btn(href="#", style="margin-top: 10px") Read More
+
+      // About Section
+      section
+        h2.section-title About Yope Blog
+        .about-section
+          .about-content
+            h3(style="margin-bottom: 1rem; color: var(--primary);") Our Story
+            p(style="margin-bottom: 1rem;") Yope Blog was founded in 2020 with a simple mission: to provide high-quality, insightful content on technology, design, and digital culture.
+            p(style="margin-bottom: 1.5rem;") Our team of passionate writers and industry experts share their knowledge and experiences to help you stay ahead in the rapidly evolving digital landscape.
+            a.btn(href="/about") Learn More
+          .about-image
+            img(src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80", alt="About Yope Blog")
+
+      // Popular Categories
+      section
+        h2.section-title Popular Categories
+        .categories
+          .category-card
+            .category-icon
+              i.fas.fa-laptop-code
+            h3 Technology
+            p 42 articles
+
+          .category-card
+            .category-icon
+              i.fas.fa-paint-brush
+            h3 Design
+            p 28 articles
+
+          .category-card
+            .category-icon
+              i.fas.fa-chart-line
+            h3 Business
+            p 35 articles
+
+          .category-card
+            .category-icon
+              i.fas.fa-leaf
+            h3 Lifestyle
+            p 22 articles
+
+      // Newsletter
+      section.newsletter
+        h2 Stay Updated
+        p Subscribe to our newsletter to receive the latest articles and updates directly to your inbox.
+        form.newsletter-form
+          input(type="email", placeholder="Your email address")
+          button(type="submit") Subscribe
+
+    // Footer
+    footer
+      .container
+        .footer-content
+          .footer-column
+            h3 Yope Blog
+            p Your go-to source for technology insights, design inspiration, and digital trends.
+            .social-links
+              a(href="#")
+                i.fab.fa-facebook-f
+              a(href="#")
+                i.fab.fa-twitter
+              a(href="#")
+                i.fab.fa-instagram
+              a(href="#")
+                i.fab.fa-linkedin-in
+
+          .footer-column
+            h3 Quick Links
+            ul.footer-links
+              li
+                a(href="/") Home
+              li
+                a(href="/about") About Us
+              li
+                a(href="/post") All Posts
+              li
+                a(href="/contact") Contact
+              li
+                a(href="/privacy") Privacy Policy
+
+          .footer-column
+            h3 Popular Categories
+            ul.footer-links
+              li
+                a(href="#") Technology
+              li
+                a(href="#") Web Development
+              li
+                a(href="#") UI/UX Design
+              li
+                a(href="#") Digital Marketing
+              li
+                a(href="#") Business
+
+          .footer-column
+            h3 Contact Us
+            ul.footer-links
+              li
+                i.fas.fa-envelope
+                a(href="mailto:info@yopeblog.com") info@yopeblog.com
+              li
+                i.fas.fa-phone
+                a(href="tel:+1234567890") +1 (234) 567-890
+              li
+                i.fas.fa-map-marker-alt
+                span 123 Tech Street, Digital City
+
+        .copyright
+          p &copy; 2023 Yope Blog. All rights reserved.

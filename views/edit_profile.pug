@@ -1,27 +1,31 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Profile
-    body
-        include index.pug 
-        h1 Edit Profile
-        form(action="/account/profile", method="post", enctype="multipart/form-data")
-            div
-                label(for="username") Username:
-                input(type="text", id="username", name="username", value=user.username, required)
-            div
-                label(for="email") Email:
-                input(type="email", id="email", name="email", value=user.email, required)
-            div
-                label(for="password") Password:
-                input(type="password", id="password", name="password")
-            div
-                label(for="bio") Bio:
-                textarea(id="bio", name="bio") #{user.bio ? user.bio : ''}
-            div
-                label(for="profilePicture") Profile Picture:
-                input(type="file", id="profilePicture", name="profilePicture")
-            div
-                button(type="submit") Save Changes
+extends layout.pug
+
+block content
+  .form-container
+    h1.mb-3 Edit Profile
+    form(action="/account/profile", method="post", enctype="multipart/form-data")
+      .form-group
+        label(for="username") Username
+        input(type="text", id="username", name="username", value=user.username, required)
+      
+      .form-group
+        label(for="email") Email
+        input(type="email", id="email", name="email", value=user.email, required)
+      
+      .form-group
+        label(for="password") New Password (leave blank to keep current)
+        input(type="password", id="password", name="password")
+      
+      .form-group
+        label(for="bio") Bio
+        textarea(id="bio", name="bio")= user.bio || ''
+      
+      .form-group
+        label(for="profilePicture") Profile Picture
+        input(type="file", id="profilePicture", name="profilePicture", accept="image/*", data-preview="profilePreview")
+        if user.profilePictureUrl
+          img#profilePreview.profile-picture(src=user.profilePictureUrl, alt="Profile Picture")
+        else
+          img#profilePreview.profile-picture(src="/images/default-profile.jpg", alt="Default Profile", style="display: block;")
+      
+      button.btn(type="submit") Save Changes

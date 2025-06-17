@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= title || 'Yope Blog'
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    header
+      nav.container
+        a.logo(href="/") Yope Blog
+        .nav-links
+          a(href="/") Home
+          a(href="/about") About
+          a(href="/contact") Contact
+          if user
+            a(href="/account/logout") Logout
+            a(href="/account/profile") Profile
+          else
+            a(href="/account/login") Login
+            a(href="/account/signup") Sign Up
+          a(href="/post") Posts
+          a(href="/post/create") Create Post
+          a(href="/post/search?query=") Search
+
+    main.container
+      block content
+
+    script(src="/js/script.js")

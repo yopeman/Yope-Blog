@@ -34,15 +34,31 @@ app.use(session({
 }))
 
 app.get('/', (req, res) => {
-    res.send(`
-        <h1>Welcome to the Blog App [${req.session.user ? req.session.user.username : 'Guest'}]</h1>
-        <p><a href="/account/signup">Sign Up</a></p>
-        <p><a href="/account/login">Login</a></p>
-        <p><a href="/account/logout">Logout</a></p>
-        <p><a href="/account/profile">Profile</a></p><br>
+    // res.send(`
+    //     <h1>Welcome to the Blog App [${req.session.user ? req.session.user.username : 'Guest'}]</h1>
+    //     <p><a href="/account/signup">Sign Up</a></p>
+    //     <p><a href="/account/login">Login</a></p>
+    //     <p><a href="/account/logout">Logout</a></p>
+    //     <p><a href="/account/profile">Profile</a></p><br>
 
-        <p><a href="/post">Post</a></p>
-    `)
+    //     <p><a href="/post">Post</a></p>
+    // `)
+    res.render('index', {
+        title: 'Welcome to the Blog App',
+        user: req.session.user || null
+    })
+})
+
+app.get('/about', (req, res) => {
+    res.render('about')
+})
+
+app.get('/contact', (req, res) => {
+    res.render('contact')
+})   
+
+app.use((err, req, res, next) => {
+    res.render('index')
 })
 
 app.use('/account', user_route)

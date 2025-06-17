@@ -1,0 +1,277 @@
+//- about.pug
+extends layout.pug
+
+block content
+  // Hero Section
+  section.hero(style="background: linear-gradient(rgba(67, 97, 238, 0.9), rgba(63, 55, 201, 0.9)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');")
+    .container.text-center
+      h1 About Yope Blog
+      p.lead Discover our story, mission, and the passionate team behind the platform
+
+  // Main Content
+  main.container
+    // Our Story
+    section.section.mb-6
+      .row.align-items-center
+        .col-md-6
+          h2.mb-4 Our Story
+          p Yope Blog began in 2020 as a small passion project between friends who wanted to share their tech knowledge. What started as a weekend hobby quickly grew into a thriving community of writers, developers, and tech enthusiasts.
+          p Today, we're proud to serve over 100,000 monthly readers with insightful content about web development, design trends, and emerging technologies.
+          .mt-4
+            .stat-box
+              h3 500+
+              p Articles Published
+            .stat-box
+              h3 50+
+              p Expert Contributors
+            .stat-box
+              h3 100K+
+              p Monthly Readers
+        .col-md-6
+          img.img-fluid.rounded(src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80", alt="Team collaboration")
+
+    // Mission & Values
+    section.section.mb-6
+      h2.text-center.mb-5 Our Mission & Values
+      .row
+        .col-md-4.mb-4
+          .card.h-100
+            .card-body.text-center
+              .icon-box
+                i.fas.fa-lightbulb
+              h3.card-title Inspire
+              p.card-text We aim to spark creativity and innovation through thought-provoking content
+        .col-md-4.mb-4
+          .card.h-100
+            .card-body.text-center
+              .icon-box
+                i.fas.fa-graduation-cap
+              h3.card-title Educate
+              p.card-text Providing practical knowledge that helps our readers grow professionally
+        .col-md-4.mb-4
+          .card.h-100
+            .card-body.text-center
+              .icon-box
+                i.fas.fa-users
+              h3.card-title Connect
+              p.card-text Building a community where tech enthusiasts can share ideas and collaborate
+
+    // Team Section
+    section.section.mb-6
+      h2.text-center.mb-5 Meet Our Team
+      .row
+        .col-md-4.mb-4
+          .team-card
+            img.team-img(src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt="Alex Johnson")
+            .team-info
+              h4 Alex Johnson
+              p Founder & Editor
+              .social-links
+                a(href="#")
+                  i.fab.fa-twitter
+                a(href="#")
+                  i.fab.fa-linkedin
+        .col-md-4.mb-4
+          .team-card
+            img.team-img(src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt="Sarah Williams")
+            .team-info
+              h4 Sarah Williams
+              p Lead Developer
+              .social-links
+                a(href="#")
+                  i.fab.fa-twitter
+                a(href="#")
+                  i.fab.fa-linkedin
+        .col-md-4.mb-4
+          .team-card
+            img.team-img(src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt="Michael Chen")
+            .team-info
+              h4 Michael Chen
+              p Design Director
+              .social-links
+                a(href="#")
+                  i.fab.fa-twitter
+                a(href="#")
+                  i.fab.fa-linkedin
+
+      .text-center.mt-4
+        a.btn.btn-primary(href="/careers") Join Our Team
+
+    // Community
+    section.section
+      .community-banner
+        .row
+          .col-md-8
+            h2 Join Our Community
+            p Become part of our growing community of tech enthusiasts, developers, and creators
+          .col-md-4.text-center
+            a.btn.btn-light.btn-lg(href="/signup") Sign Up Today
+
+  style.
+    /* About Page Specific Styles */
+    .hero {
+      padding: 120px 0;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      margin-bottom: 60px;
+      border-radius: 0 0 20px 20px;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .hero p.lead {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+    
+    .section {
+      margin-bottom: 80px;
+    }
+    
+    .stat-box {
+      display: inline-block;
+      text-align: center;
+      padding: 20px;
+      margin-right: 20px;
+      background: rgba(67, 97, 238, 0.1);
+      border-radius: 10px;
+      min-width: 150px;
+    }
+    
+    .stat-box h3 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 5px;
+    }
+    
+    .icon-box {
+      width: 80px;
+      height: 80px;
+      background: rgba(67, 97, 238, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    
+    .icon-box i {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+    
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    }
+    
+    .team-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    
+    .team-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    }
+    
+    .team-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    
+    .team-info {
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .social-links {
+      margin-top: 15px;
+    }
+    
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: rgba(67, 97, 238, 0.1);
+      border-radius: 50%;
+      color: var(--primary);
+      margin: 0 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .community-banner {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 50px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .community-banner h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    
+    .community-banner p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+    }
+    
+    .btn-light {
+      background: white;
+      color: var(--primary);
+      font-weight: 600;
+      padding: 12px 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .hero {
+        padding: 80px 0;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p.lead {
+        font-size: 1.2rem;
+      }
+      
+      .community-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+      }
+      
+      .community-banner .col-md-4 {
+        margin-top: 20px;
+      }
+    }
