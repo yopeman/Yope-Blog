@@ -57,11 +57,13 @@ app.get('/contact', (req, res) => {
     res.render('contact')
 })   
 
-app.use((err, req, res, next) => {
-    res.render('index')
-})
+
 
 app.use('/account', user_route)
 app.use('/post', post_route)
+
+app.use((err, req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'))
+})
 
 app.listen(port, () => console.log(`http://localhost:${port}/`))
