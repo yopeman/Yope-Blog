@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Document
+    body
+        include index.pug 
+        h1 Post List
+        p
+            a(href="/post/create") Create New Post
+        form(action="/post/search", method="get")
+            input(type="text", name="query", placeholder="Search posts...", value=query || '')
+            button(type="submit") Search
+        br
+        if posts.length === 0
+            p No posts available.
+        else
+            ul
+                each post in posts
+                    li
+                        a(href=`/post/${post.id}`) #{post.title}
+

@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Profile
+    body
+        include index.pug 
+        h1 Edit Profile
+        form(action="/account/profile", method="post", enctype="multipart/form-data")
+            div
+                label(for="username") Username:
+                input(type="text", id="username", name="username", value=user.username, required)
+            div
+                label(for="email") Email:
+                input(type="email", id="email", name="email", value=user.email, required)
+            div
+                label(for="password") Password:
+                input(type="password", id="password", name="password")
+            div
+                label(for="bio") Bio:
+                textarea(id="bio", name="bio") #{user.bio ? user.bio : ''}
+            div
+                label(for="profilePicture") Profile Picture:
+                input(type="file", id="profilePicture", name="profilePicture")
+            div
+                button(type="submit") Save Changes

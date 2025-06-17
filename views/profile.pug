@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Profile
+    body
+        include index.pug 
+        h1 Profile
+        p Username: #{user.username}
+        p Email: #{user.email}
+        if profiles
+            each profile in profiles
+                img(src=profile.profilePictureUrl, alt="Profile Picture")   
+        else
+            img(src="/images/default-profile.jpg", alt="Default Profile Picture")
+        p.bio
+            | Bio:
+            | #{user.bio ? user.bio : 'No bio available.'}
+        p Registration Date: #{user.createdAt} and Last updated date: #{user.updatedAt}
+        p 
+            a(href="/account/profile/edit") Edit Profile
+        p
+            a(href="/account/logout") Logout

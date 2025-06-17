@@ -1,0 +1,86 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{post.title} - Post Details
+    style.
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        img {
+            max-width: 50%;
+            height: auto;
+        }
+        .authorProfileImg img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .authorProfileInfo {
+            margin-top: 10px;
+            flow: row;
+            align-items: center;
+            display: flex;
+            gap: 10px;
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+    body
+        include index.pug 
+        h1 #{post.title}
+        if post.imageUrl
+            img(src=`${post.imageUrl}`, alt="Post Image", style="max-width: 200px;")
+        else
+            p No image uploaded.
+        p #{post.content}
+        p Tags: #{post.tag || 'No tags'}
+        p Created at: #{post.createdAt}
+
+        if author
+            h2 About the Author
+            p Username: #{author.username}
+            p Email: #{author.email}
+            if profiles
+                div.authorProfileImg
+                    each profile in profiles
+                        img(src=profile.profilePictureUrl, alt="Profile Picture")   
+            else
+                img(src="/images/default-profile.jpg", alt="Default Profile Picture")
+            p.bio
+                | Bio:
+                | #{author.bio ? author.bio : 'No bio available.'}
+            p Registration Date: #{author.createdAt} and Last updated date: #{author.updatedAt}
+
+        if comments
+            h2 Comments
+            ul
+                each comment in comments
+                    li
+                        p #{comment.content} - <strong>#{comment.User.username}</strong>
+                        p Created at: #{comment.createdAt}
+        else
+            p No comments yet.
+        form(action=`/post/comment/${post.id}`, method="post")
+            input(type="text", name="content", placeholder="Add a comment...", required)
+            button(type="submit") Submit Comment
+
+        p 
+            a(href="/post") Back to Post List
+        //- p a(href=`/user/${post.author}`) Author Profile
+        p 
+            a(href=`/post/search?query=${post.author}`) Other Posts by Author
+        p 
+            a(href=`/post/search?query=${post.tag}`) Related Posts
+        p 
+            a(href=`#`) Go to Top
+

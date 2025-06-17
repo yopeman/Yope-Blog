@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Document
+    body
+        include index.pug 
+        h1 Logout
+        p Do you really want to log out?
+        p If you are sure, click the button below to log out.
+        form(action="/logout", method="post") 
+            button(type="submit") Logout
+        p If you want to go back, click the button below.
+        button(type="button" onclick="window.history.back()") Go Back

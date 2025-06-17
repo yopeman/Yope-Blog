@@ -1,0 +1,17 @@
+h1 Yope Blog 
+p
+    span 
+        a(href="/") Home
+        a(href="/about") About
+        a(href="/contact") Contact
+        a(href="/login") Login
+        a(href="/signup") Sign Up
+        a(href="/logout") Logout
+        a(href="/profile") Profile
+        a(href="/post") Posts
+        a(href="/post/create") Create Post
+        a(href="/post/search?query=") Search Post
+        if post
+            a(href=`/post/${post.id}`) View Post
+            a(href=`/post/edit/${post.id}`) Edit Post
+            a(href=`/post/delete/${post.id}`) Delete Post
